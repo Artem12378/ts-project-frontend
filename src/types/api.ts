@@ -2,18 +2,28 @@
  * ЗАДАЧА: Определите типы для ответов API и ошибок
  */
 
+import { User } from "./entities";
+
 // TODO: Определите тип для успешного ответа, который содержит данные типа T
 export interface ApiSuccessResponse<T> {
   // Подсказка: API возвращает { success: true, data: T }
+  success: true,
+  data: T 
 }
 
 // TODO: Определите тип для ошибки API
 export interface ApiErrorResponse {
-  // Подсказка: API возвращает { success: false, error: { message, code?, details? } }
+  // Подсказка: API возвращает {  } }
+  success: false, 
+  error: { 
+    message: string, 
+    code?: string | string, 
+    details?: null
+  }
 }
 
 // TODO: Определите общий тип для ответа API, который может быть либо успешным, либо ошибкой
-export type ApiResponse<T> = any/* Ваш код здесь */;
+export type ApiResponse<T> = ApiSuccessResponse<T> | ApiErrorResponse /* Ваш код здесь */;
 
 // Готовые типы для аутентификации и регистрации
 export interface LoginCredentials {
@@ -29,7 +39,12 @@ export interface RegisterData {
 
 // TODO: Определите тип для ответа при аутентификации
 export interface AuthResponse {
-  // Подсказка: что возвращает API при успешной аутентификации? (смотри документацию Swagger)
+    success: boolean;
+    data: {
+        user: User
+        accessToken: string;
+        
+    };
 }
 
 // TODO: Определите тип для создания привычки
@@ -66,3 +81,4 @@ export function isErrorResponse<T>(
   // Ваш код здесь
   return false;
 }
+
