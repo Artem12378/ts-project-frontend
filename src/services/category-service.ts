@@ -3,15 +3,16 @@
  */
 
 import { mockCategories } from "../mocks/categories";
+import { Category, CreateCategoryData, UpdateCategoryData } from "../types";
 
-let categories: any[] = [...mockCategories];
+let categories: Category[] = [...mockCategories];
 
-export async function getAllCategories(): Promise<any[]> {
+export async function getAllCategories(): Promise<Category[]> {
   // TODO: Заменить на вызов API
   return Promise.resolve([...categories]);
 }
 
-export async function getCategoryById(id: string): Promise<any> {
+export async function getCategoryById(id: Pick<Category, "id">["id"]): Promise<Category> {
   // TODO: Реализовать
   const category = categories.find((c) => c.id === id);
   if (!category) {
@@ -20,12 +21,16 @@ export async function getCategoryById(id: string): Promise<any> {
   return Promise.resolve(category);
 }
 
-export async function createCategory(data: any): Promise<any> {
+
+export async function createCategory(
+  data: CreateCategoryData,
+): Promise<Category> {
   // TODO: Заменить на вызов API
-  const newCategory = {
+  const newCategory: Category = {
     id: `cat-${Date.now()}`,
     userId: "user-1",
-    ...data,
+    name: data.name,
+    color: data.color || "#2ECC71",
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   };
@@ -34,9 +39,11 @@ export async function createCategory(data: any): Promise<any> {
   return Promise.resolve(newCategory);
 }
 
-export async function updateCategory(id: string, data: any): Promise<any> {
+
+
+export async function updateCategory(data: UpdateCategoryData): Promise<Category> {
   // TODO: Реализовать
-  const index = categories.findIndex((c) => c.id === id);
+  const index = categories.findIndex((c) => c.id === data.id);
   if (index === -1) {
     throw new Error("Category not found");
   }
