@@ -2,25 +2,16 @@
  * Сервис аналитики  - ЗАДАЧА СТУДЕНТА
  */
 
-import {
-  mockAnalyticsSummary,
-  mockCalendar,
-  mockHeatmap,
-  mockTrends,
-  mockCompletionRate,
-} from "../mocks/analytics";
-import {
-  mockAchievements,
-  mockAvailableAchievements,
-} from "../mocks/achievements";
+
 import { AnalyticsSummary } from "../types";
+import { get } from "../api";
 
 // --- Аналитика (GET /api/v1/analytics/) ---
 
 export async function getAnalyticsSummary(): Promise<AnalyticsSummary> {
   // TODO: Замените на реальный API вызов
   // return request<AnalyticsSummary>('/analytics/');
-  return Promise.resolve({ ...mockAnalyticsSummary });
+  return get('analytics/')
 }
 
 export async function getCalendar(
@@ -30,7 +21,7 @@ export async function getCalendar(
 ): Promise<any[]> {
   // TODO: Замените на реальный API вызов
   // return request<CalendarDay[]>('/analytics/calendar', { params: { startDate, endDate, habitIds } });
-  return Promise.resolve([...mockCalendar]);
+  return get('analytics/calendar')
 }
 
 export async function getHeatmap(
@@ -39,7 +30,7 @@ export async function getHeatmap(
 ): Promise<any[]> {
   // TODO: Замените на реальный API вызов
   // return request<HeatmapItem[]>('/analytics/heatmap', { params: { startDate, endDate } });
-  return Promise.resolve([...mockHeatmap]);
+  return get('analytics/heatmap')
 }
 
 export async function getTrends(
@@ -49,7 +40,7 @@ export async function getTrends(
 ): Promise<any[]> {
   // TODO: Замените на реальный API вызов
   // return request<TrendItem[]>('/analytics/trends', { params: { startDate, endDate, groupBy } });
-  return Promise.resolve([...mockTrends]);
+  return get('analytics/trends')
 }
 
 export async function getCompletionRate(
@@ -58,7 +49,7 @@ export async function getCompletionRate(
 ): Promise<any> {
   // TODO: Замените на реальный API вызов
   // return request<CompletionRateData>('/analytics/completion-rate', { params: { startDate, endDate } });
-  return Promise.resolve({ ...mockCompletionRate });
+  return get('analytics/completion-rate')
 }
 
 // --- Достижения (GET /api/v1/achievements/) ---
@@ -66,16 +57,16 @@ export async function getCompletionRate(
 export async function getAchievements(): Promise<any[]> {
   // TODO: Замените на реальный API вызов
   // return request<AchievementRead[]>('/achievements/');
-  return Promise.resolve([...mockAchievements]);
+  return get('achievements/')
 }
 
 export async function getAvailableAchievements(): Promise<any[]> {
   // TODO: Замените на реальный API вызов
   // return request<AvailableAchievement[]>('/achievements/available');
-  return Promise.resolve([...mockAvailableAchievements]);
+  return get('achievements/available')
 }
 
 export async function exportData(): Promise<any> {
   // TODO: Имплементируйте
-  return Promise.resolve({});
+  return get('data/export')
 }

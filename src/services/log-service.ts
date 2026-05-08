@@ -2,40 +2,26 @@
  * Сервис логов - ЗАДАЧА СТУДЕНТА
  */
 
-import { mockLogs } from "../mocks/logs";
+import { get, post, del } from "../api";
+import { CreateLogData, HabitLog } from "../types";
 
-let logs: any[] = [...mockLogs];
 
-export async function getAllLogs(): Promise<any[]> {
-  // TODO: Заменить на вызов API
-  return Promise.resolve([...logs]);
+
+export async function getAllLogs() {
+  // TODO: Заменить на вызов API  
+  return get<HabitLog[]>('logs/')
 }
 
-export async function getLogsByHabit(habitId: string): Promise<any[]> {
+export async function getLogsByHabit(habitId: Pick<HabitLog, 'habitId'>['habitId']) {
   // TODO: Реализовать
-  return Promise.resolve(logs.filter((l) => l.habitId === habitId));
+  return get<HabitLog[]>(`logs/?habitId=${habitId}`)
 }
 
-export async function createLog(data: any): Promise<any> {
+export async function createLog(data: CreateLogData){
   // TODO: Заменить на вызов API
-  const newLog = {
-    id: `log-${Date.now()}`,
-    userId: "user-1",
-    ...data,
-    completedAt: data.completedAt || new Date().toISOString(),
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  };
-
-  logs.push(newLog);
-  return Promise.resolve(newLog);
+  return post<HabitLog> ('logs/', data)
 }
 
 export async function deleteLog(id: string): Promise<void> {
-  // TODO: Реализовать
-  const index = logs.findIndex((l) => l.id === id);
-  if (index !== -1) {
-    logs.splice(index, 1);
-  }
-  return Promise.resolve();
+  return del(`logs/${id}`)
 }
